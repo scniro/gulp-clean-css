@@ -1,4 +1,4 @@
-# gulp-minify-css
+# gulp-clean-css
 
 > [gulp](http://gulpjs.com/) plugin to minify CSS, using [clean-css](https://github.com/jakubpawlowicz/clean-css)
 
