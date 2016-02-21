@@ -1,5 +1,5 @@
 {
-  "name": "gulp-minify-css",
+  "name": "gulp-clean-css",
   "description": "Minify css with clean-css.",
   "version": "2.0.0",
   "author": "scniro",
