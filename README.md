@@ -9,7 +9,9 @@ This is just a simple [gulp](https://github.com/gulpjs/gulp) plugin, which means
 
 ## Installation
 
-// npm TBD
+```
+npm install --save-dev gulp-clean-css
+```
 
 ## API
 
