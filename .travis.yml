@@ -1,8 +1,0 @@
-sudo: false
-git:
-  depth: 2
-branches:
-  except: /^v\d/
-language: node_js
-node_js: stable
-after_script: npm run-script coveralls

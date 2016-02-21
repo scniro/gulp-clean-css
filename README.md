@@ -1,15 +1,7 @@
 # gulp-minify-css
 
-[![NPM version](http://img.shields.io/npm/v/gulp-minify-css.svg)](https://www.npmjs.com/package/gulp-minify-css)
-[![Build Status](https://travis-ci.org/murphydanger/gulp-minify-css.svg?branch=master)](https://travis-ci.org/murphydanger/gulp-minify-css)
-[![Coverage Status](https://img.shields.io/coveralls/murphydanger/gulp-minify-css.svg)](https://coveralls.io/r/murphydanger/gulp-minify-css)
-[![Dependency Status](https://img.shields.io/david/murphydanger/gulp-minify-css.svg?label=deps)](https://david-dm.org/murphydanger/gulp-minify-css)
-[![devDependency Status](https://img.shields.io/david/dev/murphydanger/gulp-minify-css.svg?label=devDeps)](https://david-dm.org/murphydanger/gulp-minify-css#info=devDependencies)
-
 > [gulp](http://gulpjs.com/) plugin to minify CSS, using [clean-css](https://github.com/jakubpawlowicz/clean-css)
 
-# Deprecation warning
-This package has been deprecated in favor of [`gulp-cssnano`](https://github.com/ben-eb/gulp-cssnano), which should offer more advanced optimizations.
 
 ## Regarding Issues
 
@@ -65,4 +57,4 @@ gulp.task('minify-css', function() {
 
 ## LICENSE
 
-[MIT](./LICENSE) © 2016 [Murphy Danger](https://github.com/murphydanger)
+[MIT](./LICENSE) © 2016 [scniro](https://github.com/scniro)

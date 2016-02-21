@@ -1,19 +1,12 @@
 {
   "name": "gulp-minify-css",
   "description": "Minify css with clean-css.",
-  "version": "1.2.3",
-  "author": "Murphy Danger",
+  "version": "1.0.0",
+  "author": "scniro",
   "license": "MIT",
   "files": [
     "index.js"
   ],
-  "scripts": {
-    "pretest": "eslint --fix --config @shinnn/node-legacy --env mocha index.js test",
-    "test": "node --harmony_destructuring node_modules/mocha/bin/_mocha --full-trace",
-    "test-dot": "node --harmony_destructuring node_modules/mocha/bin/_mocha --reporter dot --full-trace",
-    "coverage": "node --harmony_destructuring node_modules/istanbul/lib/cli cover _mocha -- --full-trace",
-    "coveralls": "${npm_package_scripts_coverage} && istanbul-coveralls"
-  },
   "dependencies": {
     "clean-css": "^3.3.3",
     "gulp-util": "^3.0.5",
