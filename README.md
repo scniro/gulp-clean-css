@@ -9,19 +9,15 @@ This is just a simple [gulp](https://github.com/gulpjs/gulp) plugin, which means
 
 ## Installation
 
-[Use npm.](https://docs.npmjs.com/cli/install)
-
-```
-npm install --save-dev gulp-minify-css
-```
+// npm TBD
 
 ## API
 
 ```javascript
-var minifyCss = require('gulp-minify-css');
+var cleanCSS = require('gulp-clean-css');
 ```
 
-### minifyCss([*options*])
+### cleanCSS([*options*])
 
 *options*: `Object`  
 Return: `Object` ([stream.Transform](https://nodejs.org/docs/latest/api/stream.html#stream_class_stream_transform))
@@ -30,11 +26,11 @@ Options are directly passed to the [`CleanCSS` constructor](https://github.com/j
 
 ```javascript
 var gulp = require('gulp');
-var minifyCss = require('gulp-minify-css');
+var cleanCSS = require('gulp-clean-css');
 
 gulp.task('minify-css', function() {
   return gulp.src('styles/*.css')
-    .pipe(minifyCss({compatibility: 'ie8'}))
+    .pipe(cleanCSS({compatibility: 'ie8'}))
     .pipe(gulp.dest('dist'));
 });
 ```
@@ -43,13 +39,13 @@ gulp.task('minify-css', function() {
 
 ```javascript
 var gulp = require('gulp');
-var minifyCss = require('gulp-minify-css');
+var cleanCSS = require('gulp-clean-css');
 var sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('minify-css', function() {
   return gulp.src('./src/*.css')
     .pipe(sourcemaps.init())
-    .pipe(minifyCss())
+    .pipe(cleanCSS())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('dist'));
 });

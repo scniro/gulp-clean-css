@@ -9,7 +9,7 @@ var PluginError = require('gulp-util').PluginError;
 var Transform = require('readable-stream/transform');
 var VinylBufferStream = require('vinyl-bufferstream');
 
-module.exports = function gulpMinifyCSS(options) {
+module.exports = function gulpCleanCSS(options) {
   options = options || {};
 
   return new Transform({
@@ -64,7 +64,7 @@ module.exports = function gulpMinifyCSS(options) {
 
       run(file, function(err, contents) {
         if (err) {
-          self.emit('error', new PluginError('gulp-minify-css', err, {fileName: file.path}));
+          self.emit('error', new PluginError('gulp-clean-css', err, {fileName: file.path}));
         } else {
           file.contents = contents;
           self.push(file);
