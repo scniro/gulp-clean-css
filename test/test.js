@@ -15,7 +15,6 @@ describe('gulp-clean-css: init', function () {
 describe('gulp-clean-css: streaming', function () {
 
     it('should allow the file through', function (done) {
-
         var i = 0;
 
         gulp.src('test/fixtures/test.css')
