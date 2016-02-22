@@ -20,7 +20,9 @@
     "clean-css",
     "minify-css",
     "gulp-minify-css",
-    "gulp-clean-css"
+    "gulp-clean-css",
+    "gulpplugin",
+    "gulpfriendly"
   ],
   "dependencies": {
     "clean-css": "^3.4.9",
