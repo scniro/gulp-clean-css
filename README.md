@@ -1,5 +1,6 @@
 # gulp-clean-css
 
+[![Build Status](https://api.travis-ci.org/scniro/gulp-clean-css.svg)](https://travis-ci.org/scniro/gulp-clean-css)
 [![NPM Version](https://img.shields.io/npm/v/gulp-clean-css.svg?style=flat)](https://img.shields.io/npm/v/gulp-clean-css.svg?style=flat)
 
 > [gulp](http://gulpjs.com/) plugin to minify CSS, using [clean-css](https://github.com/jakubpawlowicz/clean-css)
