@@ -1,5 +1,4 @@
 .idea
 *.node
 sandbox
-gulpfile.js
 node_modules
