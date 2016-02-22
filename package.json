@@ -14,8 +14,13 @@
   ],
   "keywords": [
     "css",
+    "clean",
     "minify",
-    "clean-css"
+    "uglify",
+    "clean-css",
+    "minify-css",
+    "gulp-minify-css",
+    "gulp-clean-css"
   ],
   "dependencies": {
     "clean-css": "^3.4.9",
