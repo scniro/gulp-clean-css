@@ -1,7 +1,9 @@
 # gulp-clean-css
 
-[![Build Status](https://api.travis-ci.org/scniro/gulp-clean-css.svg)](https://travis-ci.org/scniro/gulp-clean-css)
-[![NPM Version](https://img.shields.io/npm/v/gulp-clean-css.svg?style=flat)](https://www.npmjs.com/package/gulp-clean-css)
+[![Build Status](https://img.shields.io/travis/scniro/gulp-clean-css.svg?style=flat-square)](https://travis-ci.org/scniro/gulp-clean-css)
+[![NPM Version](https://img.shields.io/npm/v/gulp-clean-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-clean-css)
+[![Dependency Status](https://img.shields.io/david/scniro/gulp-clean-css.svg?label=deps&style=flat-square)](https://david-dm.org/scniro/gulp-clean-css)
+[![devDependency Status](https://img.shields.io/david/dev/scniro/gulp-clean-css.svg?label=devDeps&style=flat-square)](https://david-dm.org/scniro/gulp-clean-css#info=devDependencies)
 
 > [gulp](http://gulpjs.com/) plugin to minify CSS, using [clean-css](https://github.com/jakubpawlowicz/clean-css)
 
