@@ -1,8 +1,9 @@
 var chai = require('chai');
 var expect = chai.expect;
-var cleanCSS = require('./../index.js');
+var cleanCSS = require('..');
 var gulp = require('gulp');
 var File = require('vinyl');
+var buffer = require('vinyl-buffer')
 
 chai.should();
 
@@ -12,16 +13,30 @@ describe('gulp-clean-css: init', function () {
     });
 });
 
-describe('gulp-clean-css: streaming', function () {
+describe('gulp-clean-css: base functionality', function () {
 
     it('should allow the file through', function (done) {
         var i = 0;
 
         gulp.src('test/fixtures/test.css')
             .pipe(cleanCSS())
-            .pipe(gulp.dest('test/expected'))
-            .on('data', function (newFile) {
+            .on('data', function (file) {
                 i += 1;
+            })
+            .once('end', function () {
+                i.should.equal(1);
+                done();
+            });
+    });
+
+    it('should allow the file through: streaming', function (done) {
+        var i = 0;
+
+        gulp.src('test/fixtures/test.css', {buffer: false})
+            .pipe(cleanCSS())
+            .on('data', function (file) {
+                i += 1;
+                expect(file.isStream()).to.be.true;
             })
             .once('end', function () {
                 i.should.equal(1);
@@ -39,10 +54,25 @@ describe('gulp-clean-css: streaming', function () {
 
         gulp.src('test/fixtures/test.css')
             .pipe(cleanCSS())
-            .pipe(gulp.dest('test/expected'))
-            .on('data', function (newFile) {
-                expect(newFile.contents).to.exist;
-                expect(newFile.contents.toString()).to.equal(mockFile.contents.toString())
+            .on('data', function (file) {
+                file.contents.should.exist && expect(file.contents.toString()).to.equal(mockFile.contents.toString());
+                done();
+            });
+    });
+
+    it('should produce the expected file: streaming', function (done) {
+        var mockFile = new File({
+            cwd: '/',
+            base: '/test/',
+            path: '/test/expected.test.css',
+            contents: new Buffer('p{text-align:center;color:green}')
+        });
+
+        gulp.src('test/fixtures/test.css', {buffer: false})
+            .pipe(cleanCSS())
+            .pipe(buffer())
+            .on('data', function (file) {
+                file.contents.should.exist && expect(file.contents.toString()).to.equal(mockFile.contents.toString());
                 done();
             });
     });
