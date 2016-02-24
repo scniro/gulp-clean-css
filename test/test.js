@@ -1,13 +1,14 @@
+var buffer = require('vinyl-buffer');
 var chai = require('chai');
-var expect = chai.expect;
 var cleanCSS = require('..');
-var gulp = require('gulp');
+var expect = chai.expect;
 var File = require('vinyl');
-var buffer = require('vinyl-buffer')
+var gulp = require('gulp');
 
 chai.should();
 
 describe('gulp-clean-css: init', function () {
+
     it('should return the gulp-clean-css object: required export', function () {
         expect(cleanCSS).to.be.function;
     });
@@ -73,6 +74,49 @@ describe('gulp-clean-css: base functionality', function () {
             .pipe(buffer())
             .on('data', function (file) {
                 file.contents.should.exist && expect(file.contents.toString()).to.equal(mockFile.contents.toString());
+                done();
+            });
+    });
+
+    it('should invoke optional callback with details specified in options: debug', function(done) {
+
+        var expected = {
+            originalSize: 50,
+            minifiedSize: 32
+        }
+
+        gulp.src('test/fixtures/test.css')
+            .pipe(cleanCSS({debug: true}, function(details){
+                details.stats.should.exist &&
+                details.stats.originalSize.should.equal(expected.originalSize) &&
+                details.stats.minifiedSize.should.equal(expected.minifiedSize);
+            }))
+            .on('data', function (file) {
+                done();
+            });
+    });
+
+    it('should invoke optional callback with out options object supplied: return object hash', function(done) {
+        gulp.src('test/fixtures/test.css')
+            .pipe(cleanCSS(function(details){
+                details.stats.should.exist &&
+                expect(details).to.have.ownProperty('stats') &&
+                expect(details).to.have.ownProperty('errors') &&
+                expect(details).to.have.ownProperty('warnings') &&
+                expect(details).to.not.have.ownProperty('sourceMap');
+            }))
+            .on('data', function (file) {
+                done();
+            });
+    });
+
+    it('should invoke optional callback without options object supplied: return object hash with sourceMap: true; return correct hash', function(done) {
+        gulp.src('test/fixtures/test.css')
+            .pipe(cleanCSS({sourceMap: true}, function(details){
+                details.stats.should.exist &&
+                expect(details).have.ownProperty('sourceMap');
+            }))
+            .on('data', function (file) {
                 done();
             });
     });
