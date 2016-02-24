@@ -79,17 +79,11 @@ describe('gulp-clean-css: base functionality', function () {
     });
 
     it('should invoke optional callback with details specified in options: debug', function(done) {
-
-        var expected = {
-            originalSize: 50,
-            minifiedSize: 32
-        }
-
         gulp.src('test/fixtures/test.css')
             .pipe(cleanCSS({debug: true}, function(details){
                 details.stats.should.exist &&
-                details.stats.originalSize.should.equal(expected.originalSize) &&
-                details.stats.minifiedSize.should.equal(expected.minifiedSize);
+                details.stats.originalSize.should.exist
+                details.stats.minifiedSize.should.exist;
             }))
             .on('data', function (file) {
                 done();
