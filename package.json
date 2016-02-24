@@ -6,8 +6,8 @@
   "author": "scniro",
   "license": "MIT",
   "bugs": {
-    "url" : "https://github.com/scniro/gulp-clean-css/issues",
-    "email" : "scniro@outlook.com"
+    "url": "https://github.com/scniro/gulp-clean-css/issues",
+    "email": "scniro@outlook.com"
   },
   "repository": {
     "type": "git",
