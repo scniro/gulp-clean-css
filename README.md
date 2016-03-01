@@ -39,7 +39,7 @@ gulp.task('minify-css', function() {
 
 #### callback
 
-Useful for returning details from the underlying `minify()` call. An example use case include logging `stats` of the minified file.
+Useful for returning details from the underlying [`minify()`](https://github.com/jakubpawlowicz/clean-css#using-api) call. An example use case could include logging `stats` of the minified file.
 
 ```javascript
 var gulp = require('gulp');
