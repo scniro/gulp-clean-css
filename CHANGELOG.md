@@ -1,3 +1,8 @@
+## 2.0.3 (03/01/2016)
+
+- Include `name` and `path` in the clean callback
+- Improved testing and README docs
+
 ## 2.0.2 (02/23/2016)
 
 - Include optional callback parameter which returns granular details from underlying clean-css process based on supplied options
