@@ -69,7 +69,9 @@ module.exports = function gulpCleanCSS(options, callback) {
                         var details = {
                             'stats': css.stats,
                             'errors': css.errors,
-                            'warnings': css.warnings
+                            'warnings': css.warnings,
+                            'path': file.path,
+                            'name': file.path.split(file.base)[1]
                         }
 
                         if (css.sourceMap)

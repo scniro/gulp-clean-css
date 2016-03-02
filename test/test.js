@@ -119,6 +119,20 @@ describe('gulp-clean-css: base functionality', function () {
             });
     });
 
+    it('should invoke optional callback with file details returned', function (done) {
+
+        var expected = 'test.css'
+
+        gulp.src('test/fixtures/test.css')
+            .pipe(cleanCSS(function (details) {
+                details.name.should.equal(expected)
+            }))
+            .on('data', function (file) {
+                done();
+            });
+
+    })
+
     it('should write sourcemaps', function (done) {
 
         del.sync('test/fixtures/sourcemaps/expected/once.min.css');
@@ -128,7 +142,9 @@ describe('gulp-clean-css: base functionality', function () {
             .pipe(concat('once.min.css'))
             .pipe(cleanCSS())
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest('test/fixtures/sourcemaps/expected'))
+            .pipe(gulp.dest(function(file) {
+                return file.base;
+            }))
             .once('end', function () {
                 done();
             });

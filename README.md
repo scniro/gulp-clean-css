@@ -39,7 +39,7 @@ gulp.task('minify-css', function() {
 
 #### callback
 
-Useful for returning details from the underlying [`minify()`](https://github.com/jakubpawlowicz/clean-css#using-api) call. An example use case could include logging `stats` of the minified file.
+Useful for returning details from the underlying [`minify()`](https://github.com/jakubpawlowicz/clean-css#using-api) call. An example use case could include logging `stats` of the minified file. In addition to the default object, `gulp-clean-css` provides the file `name` and `path` for further analysis.
 
 ```javascript
 var gulp = require('gulp');
@@ -48,8 +48,8 @@ var cleanCSS = require('gulp-clean-css');
 gulp.task('minify-css', function() {
     return gulp.src('styles/*.css')
         .pipe(cleanCSS({debug: true}, function(details) {
-            console.log(details.stats.originalSize);
-            console.log(details.stats.minifiedSize);
+            console.log(details.name + ': ' + details.stats.originalSize);
+            console.log(details.name + ': ' + details.stats.minifiedSize);
         }))
         .pipe(gulp.dest('dist'));
 });
