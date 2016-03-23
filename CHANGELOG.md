@@ -1,3 +1,8 @@
+## 2.0.4 (03/23/2016)
+
+- dep and devDep updates
+- minor test adjustments
+
 ## 2.0.3 (03/01/2016)
 
 - Include `name` and `path` in the clean callback

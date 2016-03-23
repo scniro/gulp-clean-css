@@ -135,46 +135,22 @@ describe('gulp-clean-css: base functionality', function () {
 
     it('should write sourcemaps', function (done) {
 
-        del.sync('test/fixtures/sourcemaps/expected/once.min.css');
+        var i = 0;
 
         gulp.src('test/fixtures/sourcemaps/*.css')
             .pipe(sourcemaps.init())
-            .pipe(concat('once.min.css'))
+            .pipe(concat('sourcemapped.css'))
             .pipe(cleanCSS())
+            .on('data', function (file) {
+                i += 1;
+            })
             .pipe(sourcemaps.write())
             .pipe(gulp.dest(function(file) {
                 return file.base;
             }))
             .once('end', function () {
+                i.should.equal(1);
                 done();
-            });
-    });
-
-    it('should write sourcemaps - two passes - loadMaps: true', function (done) {
-
-        del.sync(['test/fixtures/sourcemaps/expected/twice.css', 'test/fixtures/sourcemaps/expected/twice.min.css']);
-
-        function post() {
-            gulp.src('test/fixtures/sourcemaps/expected/twice.css')
-                .pipe(sourcemaps.init({loadMaps: true}))
-                .pipe(cleanCSS())
-                .pipe(sourcemaps.write())
-                .pipe(rename({
-                    suffix: '.min'
-                }))
-                .pipe(gulp.dest('test/fixtures/sourcemaps/expected'))
-                .once('end', function () {
-                    done();
-                });
-        }
-
-        gulp.src('test/fixtures/sourcemaps/*.css')
-            .pipe(sourcemaps.init())
-            .pipe(concat('twice.css'))
-            .pipe(sourcemaps.write())
-            .pipe(gulp.dest('test/fixtures/sourcemaps/expected'))
-            .once('end', function () {
-                post();
             });
     });
 });
