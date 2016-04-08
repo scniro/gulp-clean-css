@@ -131,7 +131,7 @@ describe('gulp-clean-css: base functionality', function () {
                 done();
             });
 
-    })
+    });
 
     it('should write sourcemaps', function (done) {
 

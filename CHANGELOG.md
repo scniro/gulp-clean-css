@@ -1,3 +1,7 @@
+# 2.0.5 (04/08/2016)
+
+- clean-css release update => 3.4.11
+
 ## 2.0.4 (03/23/2016)
 
 - dep and devDep updates
