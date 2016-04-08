@@ -9,15 +9,12 @@ gulp.task('pre-test', function () {
         .pipe(istanbul.hookRequire());
 });
 
-
 gulp.task('test', ['pre-test'], function () {
     return gulp.src('test/test.js')
         .pipe(mocha({reporter: 'list'}))
         .pipe(istanbul.writeReports({
             includeUntested: true,
-            dir: 'test/coverage',
-            reporters: ['lcov'],
-            reportOpts: {dir: 'test/coverage'}
+            reporters: ['lcov']
         }))
         .on('error', gutil.log);
 });
