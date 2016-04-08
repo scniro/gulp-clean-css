@@ -9,7 +9,7 @@ var VinylBufferStream = require('vinyl-bufferstream');
 module.exports = function gulpCleanCSS(options, callback) {
 
     if (arguments.length === 1) {
-        if (Object.prototype.toString.call(arguments[0]) == '[object Function]') {
+        if (Object.prototype.toString.call(arguments[0]) === '[object Function]') {
             callback = arguments[0];
         } else {
             options = options || {};
