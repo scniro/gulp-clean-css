@@ -8,14 +8,15 @@ var VinylBufferStream = require('vinyl-bufferstream');
 
 module.exports = function gulpCleanCSS(options, callback) {
 
+    options = options || {};
+
     if (arguments.length === 1) {
         if (Object.prototype.toString.call(arguments[0]) === '[object Function]') {
             callback = arguments[0];
-        } else {
-            options = options || {};
         }
-    } else {
-        options = options || {};
+        //} else {
+        //    options = options || {};
+        //}
     }
 
     return new Transform({
@@ -35,13 +36,11 @@ module.exports = function gulpCleanCSS(options, callback) {
                     fileOptions.sourceMap = JSON.stringify(file.sourceMap);
                 }
 
-                var cssFile;
+                var cssFile = buf.toString();
 
                 if (file.path) {
                     cssFile = {};
                     cssFile[file.path] = {styles: buf.toString()};
-                } else {
-                    cssFile = buf.toString();
                 }
 
                 new CleanCSS(fileOptions).minify(cssFile, function (errors, css) {

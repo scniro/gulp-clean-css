@@ -145,7 +145,7 @@ describe('gulp-clean-css: base functionality', function () {
                 i += 1;
             })
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest(function(file) {
+            .pipe(gulp.dest(function (file) {
                 return file.base;
             }))
             .once('end', function () {
