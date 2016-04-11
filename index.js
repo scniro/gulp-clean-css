@@ -14,9 +14,6 @@ module.exports = function gulpCleanCSS(options, callback) {
         if (Object.prototype.toString.call(arguments[0]) === '[object Function]') {
             callback = arguments[0];
         }
-        //} else {
-        //    options = options || {};
-        //}
     }
 
     return new Transform({

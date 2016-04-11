@@ -8,6 +8,8 @@ var File = require('vinyl');
 var gulp = require('gulp');
 var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
+var vfsFake = require('vinyl-fs-fake');
+var PluginError = require('gulp-util').PluginError;
 
 chai.should();
 
@@ -86,7 +88,7 @@ describe('gulp-clean-css: base functionality', function () {
         gulp.src('test/fixtures/test.css')
             .pipe(cleanCSS({debug: true}, function (details) {
                 details.stats.should.exist &&
-                details.stats.originalSize.should.exist
+                details.stats.originalSize.should.exist &&
                 details.stats.minifiedSize.should.exist;
             }))
             .on('data', function (file) {
@@ -150,6 +152,71 @@ describe('gulp-clean-css: base functionality', function () {
             }))
             .once('end', function () {
                 i.should.equal(1);
+                done();
+            });
+    });
+
+    it('should write sourcemaps: preserve source', function (done) {
+
+        var i = 0;
+
+        var css = new File({
+            path: 'https://foo.com',
+            contents: new Buffer('span { text-align: left; color: red; }')
+        });
+
+        vfsFake.src(css)
+            .pipe(sourcemaps.init())
+            .pipe(cleanCSS())
+            .pipe(sourcemaps.write())
+            .on('data', function (file) {
+                expect(file.path).to.equal('https://foo.com')
+                i += 1;
+            })
+            .once('end', function () {
+                i.should.equal(1);
+                done();
+            });
+    });
+
+    it('should return a warning for improper syntax', function (done) {
+
+        var i = 0;
+
+        var css = new File({
+            path: '/',
+            contents: new Buffer('body{')
+        });
+
+        vfsFake.src(css)
+            .pipe(cleanCSS({debug: true}, function (details) {
+                expect(details.warnings).to.exist &&
+                expect(details.warnings.length).to.equal(1) &&
+                expect(details.warnings[0]).to.equal('Missing \'}\' after \'__ESCAPED_SOURCE_END_CLEAN_CSS__\'. Ignoring.');
+
+            }))
+            .on('data', function (file) {
+                i += 1;
+            })
+            .once('end', function () {
+                i.should.equal(1);
+                done();
+            });
+    });
+
+    it('should invoke a plugin error', function (done) {
+
+        var css = new File({
+            path: '/',
+            contents: new Buffer('@import url(/some/fake/file);')
+        });
+
+        vfsFake.src(css)
+            .pipe(cleanCSS())
+            .on('error', function (err) {
+                expect(err).to.exist;
+                expect(err.message).to.equal('Broken @import declaration of "/some/fake/file"');
+                expect(err).to.be.an.instanceof(PluginError);
                 done();
             });
     });

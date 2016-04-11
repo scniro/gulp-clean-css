@@ -1,3 +1,8 @@
+# 2.0.6 (04/11/2016
+
+- clean-css release update => 3.4.11
+- minor syntax adjustments for testing/code coverage
+
 # 2.0.5 (04/08/2016)
 
 - clean-css release update => 3.4.11

@@ -2,7 +2,7 @@
   "name": "gulp-clean-css",
   "description": "Minify css with clean-css.",
   "homepage": "https://github.com/scniro/gulp-clean-css#readme",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "author": "scniro",
   "license": "MIT",
   "bugs": {
@@ -29,7 +29,7 @@
     "gulpfriendly"
   ],
   "dependencies": {
-    "clean-css": "^3.4.11",
+    "clean-css": "^3.4.12",
     "gulp-util": "^3.0.7",
     "object-assign": "^4.0.1",
     "readable-stream": "^2.0.6",
@@ -38,7 +38,6 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "coveralls": "^2.11.9",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
@@ -47,9 +46,9 @@
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
     "mocha": "^2.4.5",
-    "npm": "^3.8.3",
     "vinyl": "^1.1.1",
-    "vinyl-buffer": "^1.0.0"
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-fs-fake": "^1.1.0"
   },
   "scripts": {
     "test": "gulp test"
