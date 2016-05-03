@@ -30,7 +30,7 @@ module.exports = function gulpCleanCSS(options, callback) {
                 }
 
                 if ((options.sourceMap === true || options.sourceMap === undefined) && file.sourceMap) {
-                    fileOptions.sourceMap = JSON.stringify(file.sourceMap);
+                    fileOptions.sourceMap = JSON.parse(JSON.stringify(file.sourceMap));
                 }
 
                 var cssFile = buf.toString();
