@@ -1,3 +1,11 @@
+# 2.0.8 (05/23/2016
+
+- clean-css release update => 3.4.13
+
+# 2.0.7
+
+- bug fix for node 6 support
+
 # 2.0.6 (04/11/2016
 
 - clean-css release update => 3.4.11
