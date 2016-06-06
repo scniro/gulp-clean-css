@@ -2,7 +2,7 @@
   "name": "gulp-clean-css",
   "description": "Minify css with clean-css.",
   "homepage": "https://github.com/scniro/gulp-clean-css#readme",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "author": "scniro",
   "license": "MIT",
   "bugs": {
@@ -29,7 +29,7 @@
     "gulpfriendly"
   ],
   "dependencies": {
-    "clean-css": "^3.4.14",
+    "clean-css": "^3.4.17",
     "gulp-util": "^3.0.7",
     "object-assign": "^4.1.0",
     "readable-stream": "^2.1.4",
