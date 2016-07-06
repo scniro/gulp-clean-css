@@ -179,6 +179,28 @@ describe('gulp-clean-css: base functionality', function () {
             });
     });
 
+    it('should write sourcemaps: relative path check', function(done){
+        var i = 0;
+
+        gulp.src('test/fixtures/sourcemaps/*.css')
+            .pipe(sourcemaps.init())
+            .pipe(concat('sourcemapped-relative.css'))
+            .pipe(cleanCSS({
+                relativeTo: './'
+            }))
+            .on('data', function (file) {
+                i += 1;
+            })
+            .pipe(sourcemaps.write())
+            .pipe(gulp.dest(function (file) {
+                return file.base;
+            }))
+            .once('end', function () {
+                i.should.equal(1);
+                done();
+            });
+    })
+
     it('should return a warning for improper syntax', function (done) {
 
         var i = 0;

@@ -1,3 +1,7 @@
+# 2.0.11 (07/05/2016)
+
+- clean-css release update => 3.4.18
+
 # 2.0.9 (05/31/2016
 
 - clean-css release update => 3.4.14
