@@ -1,3 +1,7 @@
+# 2.0.12 (07/26/2016)
+
+- clean-css release update => 3.4.19; devdeps
+
 # 2.0.11 (07/05/2016)
 
 - clean-css release update => 3.4.18
