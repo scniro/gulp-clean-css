@@ -3,3 +3,5 @@
 sandbox
 node_modules
 coverage
+test/fixtures/sourcemaps/sourcemapped.css
+test/fixtures/sourcemaps/sourcemapped-relative.css
