@@ -1,95 +1,71 @@
-var applySourceMap = require('vinyl-sourcemaps-apply');
-var CleanCSS = require('clean-css');
-var objectAssign = require('object-assign');
-var path = require('path');
-var PluginError = require('gulp-util').PluginError;
-var Transform = require('readable-stream/transform');
-var VinylBufferStream = require('vinyl-bufferstream');
+const applySourceMap = require('vinyl-sourcemaps-apply');
+const CleanCSS = require('clean-css');
+const objectAssign = require('object-assign');
+const path = require('path');
+const PluginError = require('gulp-util').PluginError;
+const through = require('through2');
 
 module.exports = function gulpCleanCSS(options, callback) {
 
-    options = options || {};
+  options = options || {};
 
-    if (arguments.length === 1) {
-        if (Object.prototype.toString.call(arguments[0]) === '[object Function]') {
-            callback = arguments[0];
-        }
+  if (arguments.length === 1 && Object.prototype.toString.call(arguments[0]) === '[object Function]')
+    callback = arguments[0];
+
+  var transform = function (file, enc, cb) {
+
+    if (file.isStream()) {
+      this.emit('error', new PluginError('gulp-clean-css', 'Streaming not supported!'));
+      return cb();
     }
 
-    return new Transform({
-        objectMode: true,
-        transform: function modifyContents(file, enc, cb) {
+    var fileOptions = objectAssign({target: file.path}, options);
 
-            var self = this;
+    if (!fileOptions.relativeTo && (fileOptions.root || file.path))
+      fileOptions.relativeTo = path.dirname(path.resolve(options.root || file.path));
 
-            var run = new VinylBufferStream(function (buf, done) {
-                var fileOptions = objectAssign({target: file.path}, options);
+    if (file.sourceMap)
+      fileOptions.sourceMap = JSON.parse(JSON.stringify(file.sourceMap));
 
-                if (fileOptions.relativeTo === undefined && (fileOptions.root || file.path)) {
-                    fileOptions.relativeTo = path.dirname(path.resolve(options.root || file.path));
-                }
+    var cssFile = {};
+    cssFile[file.path] = {styles: file.contents.toString()};
 
-                if ((options.sourceMap === true || options.sourceMap === undefined) && file.sourceMap) {
-                    fileOptions.sourceMap = JSON.parse(JSON.stringify(file.sourceMap));
-                }
+    new CleanCSS(fileOptions).minify(cssFile, function (errors, css) {
 
-                var cssFile = buf.toString();
+      if (errors)
+        return cb(errors.join(' '));
 
-                if (file.path) {
-                    cssFile = {};
-                    cssFile[file.path] = {styles: buf.toString()};
-                }
+      if (css.sourceMap) {
 
-                new CleanCSS(fileOptions).minify(cssFile, function (errors, css) {
+        var map = JSON.parse(css.sourceMap);
+        map.file = path.relative(file.base, file.path);
+        map.sources = map.sources.map(function (src) {
+          return path.relative(file.base, src);
+        });
 
-                    if (errors) {
-                        done(errors.join(' '));
-                        return;
-                    }
+        applySourceMap(file, map);
+      }
 
-                    if (css.sourceMap) {
-                        var map = JSON.parse(css.sourceMap);
-                        map.file = path.relative(file.base, file.path);
-                        map.sources = map.sources.map(function (src) {
-                            if (/^(https?:)?\/\//.test(src)) {
-                                return src;
-                            }
-
-                            return path.relative(file.base, src);
-                        });
-
-                        applySourceMap(file, map);
-                    }
-
-                    if (typeof callback === 'function') {
-                        var details = {
-                            'stats': css.stats,
-                            'errors': css.errors,
-                            'warnings': css.warnings,
-                            'path': file.path,
-                            'name': file.path.split(file.base)[1]
-                        }
-
-                        if (css.sourceMap)
-                            details['sourceMap'] = css.sourceMap;
-
-                        callback(details);
-                    }
-
-                    done(null, new Buffer(css.styles));
-                });
-            });
-
-            run(file, function (err, contents) {
-
-                if (err) {
-                    self.emit('error', new PluginError('gulp-clean-css', err, {fileName: file.path}));
-                } else {
-                    file.contents = contents;
-                    self.push(file);
-                }
-                cb();
-            });
+      if (typeof callback === 'function') {
+        var details = {
+          'stats': css.stats,
+          'errors': css.errors,
+          'warnings': css.warnings,
+          'path': file.path,
+          'name': file.path.split(file.base)[1]
         }
+
+        if (css.sourceMap)
+          details['sourceMap'] = css.sourceMap;
+
+        callback(details);
+      }
+
+      file.contents = new Buffer(css.styles);
+
+      cb(null, file);
     });
+  };
+
+  return through.obj(transform);
 };

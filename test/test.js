@@ -9,237 +9,167 @@ var gulp = require('gulp');
 var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
 var vfsFake = require('vinyl-fs-fake');
-var PluginError = require('gulp-util').PluginError;
 
 chai.should();
 
 describe('gulp-clean-css: init', function () {
 
-    it('should return the gulp-clean-css object: required export', function () {
-        expect(cleanCSS).to.be.function;
-    });
+  it('should return the gulp-clean-css object: required export', function () {
+    expect(cleanCSS).to.be.function;
+  });
 });
 
 describe('gulp-clean-css: base functionality', function () {
 
-    it('should allow the file through', function (done) {
-        var i = 0;
+  it('should allow the file through', function (done) {
+    var i = 0;
 
-        gulp.src('test/fixtures/test.css')
-            .pipe(cleanCSS())
-            .on('data', function (file) {
-                i += 1;
-            })
-            .once('end', function () {
-                i.should.equal(1);
-                done();
-            });
+    gulp.src('test/fixtures/test.css')
+      .pipe(cleanCSS())
+      .on('data', function (file) {
+        i += 1;
+      })
+      .once('end', function () {
+        i.should.equal(1);
+        done();
+      });
+  });
+
+  it('should produce the expected file', function (done) {
+    var mockFile = new File({
+      cwd: '/',
+      base: '/test/',
+      path: '/test/expected.test.css',
+      contents: new Buffer('p{text-align:center;color:green}')
     });
 
-    it('should allow the file through: streaming', function (done) {
-        var i = 0;
+    gulp.src('test/fixtures/test.css')
+      .pipe(cleanCSS())
+      .on('data', function (file) {
+        file.contents.should.exist && expect(file.contents.toString()).to.equal(mockFile.contents.toString());
+        done();
+      });
+  });
 
-        gulp.src('test/fixtures/test.css', {buffer: false})
-            .pipe(cleanCSS())
-            .on('data', function (file) {
-                i += 1;
-                expect(file.isStream()).to.be.true;
-            })
-            .once('end', function () {
-                i.should.equal(1);
-                done();
-            });
+  it('should invoke optional callback with details specified in options: debug', function (done) {
+    gulp.src('test/fixtures/test.css')
+      .pipe(cleanCSS({debug: true}, function (details) {
+        details.stats.should.exist &&
+        details.stats.originalSize.should.exist &&
+        details.stats.minifiedSize.should.exist;
+      }))
+      .on('data', function (file) {
+        done();
+      });
+  });
+
+  it('should invoke optional callback with out options object supplied: return object hash', function (done) {
+    gulp.src('test/fixtures/test.css')
+      .pipe(cleanCSS(function (details) {
+        details.stats.should.exist &&
+        expect(details).to.have.ownProperty('stats') &&
+        expect(details).to.have.ownProperty('errors') &&
+        expect(details).to.have.ownProperty('warnings') &&
+        expect(details).to.not.have.ownProperty('sourceMap');
+      }))
+      .on('data', function (file) {
+        done();
+      });
+  });
+
+  it('should invoke optional callback without options object supplied: return object hash with sourceMap: true; return correct hash', function (done) {
+    gulp.src('test/fixtures/test.css')
+      .pipe(cleanCSS({sourceMap: true}, function (details) {
+        details.stats.should.exist &&
+        expect(details).have.ownProperty('sourceMap');
+      }))
+      .on('data', function (file) {
+        done();
+      });
+  });
+
+  it('should invoke optional callback with file details returned', function (done) {
+
+    var expected = 'test.css'
+
+    gulp.src('test/fixtures/test.css')
+      .pipe(cleanCSS(function (details) {
+        details.name.should.equal(expected)
+      }))
+      .on('data', function (file) {
+        done();
+      });
+  });
+
+  it('should write sourcemaps', function (done) {
+
+    var i = 0;
+
+    gulp.src('test/fixtures/sourcemaps/**/*.css')
+      .pipe(sourcemaps.init())
+      .pipe(concat('sourcemapped.css'))
+      .pipe(cleanCSS())
+      .on('data', function (file) {
+        i += 1;
+      })
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest(function (file) {
+        return file.base;
+      }))
+      .once('end', function () {
+        i.should.equal(1);
+        done();
+      });
+  });
+
+  it('should return a warning for improper syntax', function (done) {
+
+    var i = 0;
+
+    var css = new File({
+      path: '/',
+      contents: new Buffer('body{')
     });
 
-    it('should produce the expected file', function (done) {
-        var mockFile = new File({
-            cwd: '/',
-            base: '/test/',
-            path: '/test/expected.test.css',
-            contents: new Buffer('p{text-align:center;color:green}')
-        });
+    vfsFake.src(css)
+      .pipe(cleanCSS({debug: true}, function (details) {
 
-        gulp.src('test/fixtures/test.css')
-            .pipe(cleanCSS())
-            .on('data', function (file) {
-                file.contents.should.exist && expect(file.contents.toString()).to.equal(mockFile.contents.toString());
-                done();
-            });
+        expect(details.warnings).to.exist &&
+        expect(details.warnings.length).to.equal(1) &&
+        expect(details.warnings[0]).to.equal('Missing \'}\' after \'__ESCAPED_SOURCE_END_CLEAN_CSS__\'. Ignoring.');
+      }))
+      .on('data', function (file) {
+        i += 1;
+      })
+      .once('end', function () {
+        i.should.equal(1);
+        done();
+      });
+  });
+
+  it('should invoke a plugin error: streaming not supported', function (done) {
+
+    gulp.src('test/fixtures/test.css', {buffer: false})
+      .pipe(cleanCSS()
+        .on('error', function (err) {
+          expect(err.message).to.equal('Streaming not supported!')
+          done();
+        }));
+  });
+
+  it('should return a clean-css error', function (done) {
+
+    var css = new File({
+      path: '/',
+      contents: new Buffer('@import url(/some/fake/file);')
     });
 
-    it('should produce the expected file: streaming', function (done) {
-        var mockFile = new File({
-            cwd: '/',
-            base: '/test/',
-            path: '/test/expected.test.css',
-            contents: new Buffer('p{text-align:center;color:green}')
-        });
-
-        gulp.src('test/fixtures/test.css', {buffer: false})
-            .pipe(cleanCSS())
-            .pipe(buffer())
-            .on('data', function (file) {
-                file.contents.should.exist && expect(file.contents.toString()).to.equal(mockFile.contents.toString());
-                done();
-            });
-    });
-
-    it('should invoke optional callback with details specified in options: debug', function (done) {
-        gulp.src('test/fixtures/test.css')
-            .pipe(cleanCSS({debug: true}, function (details) {
-                details.stats.should.exist &&
-                details.stats.originalSize.should.exist &&
-                details.stats.minifiedSize.should.exist;
-            }))
-            .on('data', function (file) {
-                done();
-            });
-    });
-
-    it('should invoke optional callback with out options object supplied: return object hash', function (done) {
-        gulp.src('test/fixtures/test.css')
-            .pipe(cleanCSS(function (details) {
-                details.stats.should.exist &&
-                expect(details).to.have.ownProperty('stats') &&
-                expect(details).to.have.ownProperty('errors') &&
-                expect(details).to.have.ownProperty('warnings') &&
-                expect(details).to.not.have.ownProperty('sourceMap');
-            }))
-            .on('data', function (file) {
-                done();
-            });
-    });
-
-    it('should invoke optional callback without options object supplied: return object hash with sourceMap: true; return correct hash', function (done) {
-        gulp.src('test/fixtures/test.css')
-            .pipe(cleanCSS({sourceMap: true}, function (details) {
-                details.stats.should.exist &&
-                expect(details).have.ownProperty('sourceMap');
-            }))
-            .on('data', function (file) {
-                done();
-            });
-    });
-
-    it('should invoke optional callback with file details returned', function (done) {
-
-        var expected = 'test.css'
-
-        gulp.src('test/fixtures/test.css')
-            .pipe(cleanCSS(function (details) {
-                details.name.should.equal(expected)
-            }))
-            .on('data', function (file) {
-                done();
-            });
-
-    });
-
-    it('should write sourcemaps', function (done) {
-
-        var i = 0;
-
-        gulp.src('test/fixtures/sourcemaps/*.css')
-            .pipe(sourcemaps.init())
-            .pipe(concat('sourcemapped.css'))
-            .pipe(cleanCSS())
-            .on('data', function (file) {
-                i += 1;
-            })
-            .pipe(sourcemaps.write())
-            .pipe(gulp.dest(function (file) {
-                return file.base;
-            }))
-            .once('end', function () {
-                i.should.equal(1);
-                done();
-            });
-    });
-
-    it('should write sourcemaps: preserve source', function (done) {
-
-        var i = 0;
-
-        var css = new File({
-            path: 'https://foo.com',
-            contents: new Buffer('span { text-align: left; color: red; }')
-        });
-
-        vfsFake.src(css)
-            .pipe(sourcemaps.init())
-            .pipe(cleanCSS())
-            .pipe(sourcemaps.write())
-            .on('data', function (file) {
-                expect(file.path).to.equal('https://foo.com')
-                i += 1;
-            })
-            .once('end', function () {
-                i.should.equal(1);
-                done();
-            });
-    });
-
-    it('should write sourcemaps: relative path check', function(done){
-        var i = 0;
-
-        gulp.src('test/fixtures/sourcemaps/*.css')
-            .pipe(sourcemaps.init())
-            .pipe(concat('sourcemapped-relative.css'))
-            .pipe(cleanCSS({
-                relativeTo: './'
-            }))
-            .on('data', function (file) {
-                i += 1;
-            })
-            .pipe(sourcemaps.write())
-            .pipe(gulp.dest(function (file) {
-                return file.base;
-            }))
-            .once('end', function () {
-                i.should.equal(1);
-                done();
-            });
-    })
-
-    it('should return a warning for improper syntax', function (done) {
-
-        var i = 0;
-
-        var css = new File({
-            path: '/',
-            contents: new Buffer('body{')
-        });
-
-        vfsFake.src(css)
-            .pipe(cleanCSS({debug: true}, function (details) {
-                expect(details.warnings).to.exist &&
-                expect(details.warnings.length).to.equal(1) &&
-                expect(details.warnings[0]).to.equal('Missing \'}\' after \'__ESCAPED_SOURCE_END_CLEAN_CSS__\'. Ignoring.');
-
-            }))
-            .on('data', function (file) {
-                i += 1;
-            })
-            .once('end', function () {
-                i.should.equal(1);
-                done();
-            });
-    });
-
-    it('should invoke a plugin error', function (done) {
-
-        var css = new File({
-            path: '/',
-            contents: new Buffer('@import url(/some/fake/file);')
-        });
-
-        vfsFake.src(css)
-            .pipe(cleanCSS())
-            .on('error', function (err) {
-                expect(err).to.exist;
-                expect(err.message).to.equal('Broken @import declaration of "/some/fake/file"');
-                expect(err).to.be.an.instanceof(PluginError);
-                done();
-            });
-    });
+    vfsFake.src(css)
+      .pipe(cleanCSS())
+      .on('error', function (err) {
+        expect(err).to.exist;
+        expect(err).to.equal('Broken @import declaration of "/some/fake/file"');
+        done();
+      });
+  });
 });
