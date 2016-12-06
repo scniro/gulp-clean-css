@@ -3,6 +3,8 @@
 - clean-css release update => 3.4.21;
 - remove vinyl-bufferstream && readable-stream/transform in favor of through2
 - remove broken if(file.path) check
+- dev: dep updates
+- dev: simple mock server for checking out cleaned css sourcemaps
 
 # 2.0.12 (07/26/2016)
 
