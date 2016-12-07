@@ -51,6 +51,28 @@ describe('gulp-clean-css: base functionality', function () {
       });
   });
 
+  it('should minify the css: empty file, no `file.contents`', function (done) {
+
+    var i = 0;
+
+    var mockFile = new File({
+      cwd: '/',
+      base: '/test/',
+      path: '/test/expected.test.css',
+      contents: undefined
+    });
+
+    vfsFake.src(mockFile)
+      .pipe(cleanCSS())
+      .on('data', function (file) {
+        i += 1;
+      })
+      .once('end', function () {
+        i.should.equal(1);
+        done();
+      });
+  });
+
   it('should invoke optional callback with details specified in options: debug', function (done) {
     gulp.src('test/fixtures/test.css')
       .pipe(cleanCSS({debug: true}, function (details) {
@@ -127,13 +149,12 @@ describe('gulp-clean-css: base functionality', function () {
     var i = 0;
 
     var css = new File({
-      path: '/',
+      path: './fixtures/test.css',
       contents: new Buffer('body{')
     });
 
     vfsFake.src(css)
       .pipe(cleanCSS({debug: true}, function (details) {
-
         expect(details.warnings).to.exist &&
         expect(details.warnings.length).to.equal(1) &&
         expect(details.warnings[0]).to.equal('Missing \'}\' after \'__ESCAPED_SOURCE_END_CLEAN_CSS__\'. Ignoring.');

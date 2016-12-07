@@ -27,10 +27,15 @@ module.exports = function gulpCleanCSS(options, callback) {
     if (file.sourceMap)
       fileOptions.sourceMap = JSON.parse(JSON.stringify(file.sourceMap));
 
-    var cssFile = {};
-    cssFile[file.path] = {styles: file.contents.toString()};
+    var cssFile;
+    var style = file.contents ? file.contents.toString() : '';
 
-    new CleanCSS(fileOptions).minify(cssFile, function (errors, css) {
+    if (file.path) {
+      cssFile = {};
+      cssFile[file.path] = {styles: style};
+    }
+
+    new CleanCSS(fileOptions).minify(cssFile || style, function (errors, css) {
 
       if (errors)
         return cb(errors.join(' '));
