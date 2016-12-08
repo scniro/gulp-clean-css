@@ -30,6 +30,7 @@
   ],
   "dependencies": {
     "clean-css": "^3.4.21",
+    "gulp-concat": "^2.6.1",
     "gulp-util": "^3.0.7",
     "object-assign": "^4.1.0",
     "through2": "^2.0.3",
@@ -41,7 +42,6 @@
     "del": "^2.2.2",
     "express": "^4.14.0",
     "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.1",
     "gulp-istanbul": "^1.1.1",
     "gulp-mocha": "^3.0.1",
     "gulp-rename": "^1.2.2",
