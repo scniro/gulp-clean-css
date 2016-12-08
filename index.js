@@ -4,6 +4,7 @@ const objectAssign = require('object-assign');
 const path = require('path');
 const PluginError = require('gulp-util').PluginError;
 const through = require('through2');
+const concat = require('gulp-concat');
 
 module.exports = function gulpCleanCSS(options, callback) {
 
@@ -30,12 +31,12 @@ module.exports = function gulpCleanCSS(options, callback) {
     var cssFile;
     var style = file.contents ? file.contents.toString() : '';
 
-    if (file.path) {
-      cssFile = {};
-      cssFile[file.path] = {styles: style};
-    }
+    //if (file.path) {
+    //  cssFile = {};
+    //  cssFile[file.path] = {styles: style};
+    //}
 
-    new CleanCSS(fileOptions).minify(cssFile || style, function (errors, css) {
+    new CleanCSS(fileOptions).minify(style, function (errors, css) {
 
       if (errors)
         return cb(errors.join(' '));

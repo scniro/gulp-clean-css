@@ -1,14 +1,15 @@
-var buffer = require('vinyl-buffer');
-var chai = require('chai');
-var cleanCSS = require('..');
-var concat = require('gulp-concat');
-var del = require('del');
-var expect = chai.expect;
-var File = require('vinyl');
-var gulp = require('gulp');
-var rename = require('gulp-rename');
-var sourcemaps = require('gulp-sourcemaps');
-var vfsFake = require('vinyl-fs-fake');
+const buffer = require('vinyl-buffer');
+const chai = require('chai');
+const cleanCSS = require('..');
+const concat = require('gulp-concat');
+const del = require('del');
+const expect = chai.expect;
+const File = require('vinyl');
+const gulp = require('gulp');
+const gulpSass = require('gulp-sass');
+const rename = require('gulp-rename');
+const sourcemaps = require('gulp-sourcemaps');
+const vfsFake = require('vinyl-fs-fake');
 
 chai.should();
 
@@ -20,6 +21,22 @@ describe('gulp-clean-css: init', function () {
 });
 
 describe('gulp-clean-css: base functionality', function () {
+
+  it('should play nicely with other plugins: gulp-sass: before', function (done) {
+    var i = 0;
+
+    gulp.src('test/fixtures/**/*.scss')
+      .pipe(gulpSass())
+      .pipe(cleanCSS())
+      .pipe(gulp.dest('test/fixtures/'))
+      .on('data', function (file) {
+        i += 1;
+      })
+      .once('end', function () {
+        i.should.equal(3);
+        done();
+      });
+  });
 
   it('should allow the file through', function (done) {
     var i = 0;
@@ -150,14 +167,14 @@ describe('gulp-clean-css: base functionality', function () {
 
     var css = new File({
       path: './fixtures/test.css',
-      contents: new Buffer('body{')
+      contents: new Buffer('body{color:red')
     });
 
     vfsFake.src(css)
       .pipe(cleanCSS({debug: true}, function (details) {
         expect(details.warnings).to.exist &&
         expect(details.warnings.length).to.equal(1) &&
-        expect(details.warnings[0]).to.equal('Missing \'}\' after \'__ESCAPED_SOURCE_END_CLEAN_CSS__\'. Ignoring.');
+        expect(details.warnings[0]).to.equal('Missing \'}\' after \'color:red\'. Ignoring.');
       }))
       .on('data', function (file) {
         i += 1;

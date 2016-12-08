@@ -2,7 +2,7 @@
   "name": "gulp-clean-css",
   "description": "Minify css with clean-css.",
   "homepage": "https://github.com/scniro/gulp-clean-css#readme",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "author": "scniro",
   "license": "MIT",
   "bugs": {
@@ -45,6 +45,7 @@
     "gulp-istanbul": "^1.1.1",
     "gulp-mocha": "^3.0.1",
     "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.9.1",
     "mocha": "^3.2.0",
     "vinyl": "^2.0.1",
