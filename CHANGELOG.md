@@ -1,3 +1,7 @@
+# 2.1.3 (12/07/2016)
+
+-bug fix => https://github.com/scniro/gulp-clean-css/issues/19
+
 # 2.1.2 (12/07/2016)
 
 - bug fix => https://github.com/scniro/gulp-clean-css/issues/8

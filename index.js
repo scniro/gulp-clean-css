@@ -4,7 +4,6 @@ const objectAssign = require('object-assign');
 const path = require('path');
 const PluginError = require('gulp-util').PluginError;
 const through = require('through2');
-const concat = require('gulp-concat');
 
 module.exports = function gulpCleanCSS(options, callback) {
 
