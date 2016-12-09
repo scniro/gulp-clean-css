@@ -25,7 +25,7 @@ describe('gulp-clean-css: base functionality', function () {
   it('should play nicely with other plugins: gulp-sass: before', function (done) {
     var i = 0;
 
-    gulp.src('test/fixtures/**/*.scss')
+    gulp.src(['test/fixtures/**/*.scss', '!test/fixtures/empty/**'])
       .pipe(gulpSass())
       .pipe(cleanCSS())
       .pipe(gulp.dest('test/fixtures/'))
@@ -48,6 +48,24 @@ describe('gulp-clean-css: base functionality', function () {
       })
       .once('end', function () {
         i.should.equal(1);
+        done();
+      });
+  });
+
+  it('should allow the file through:empty file, pipe dest', function (done) {
+    var i = 0;
+
+    gulp.src('test/fixtures/empty/**/*.scss')
+      .pipe(gulpSass())
+      .pipe(cleanCSS())
+      .pipe(gulp.dest(function (file) {
+        return `${file.base}/empty-parsed`;
+      }))
+      .on('data', function (file) {
+        i += 1;
+      })
+      .once('end', function () {
+        i.should.equal(3);
         done();
       });
   });

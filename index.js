@@ -13,9 +13,12 @@ module.exports = function gulpCleanCSS(options, callback) {
 
   var transform = function (file, enc, cb) {
 
+    if (!file || !file.contents)
+      return cb(null, file);
+
     if (file.isStream()) {
       this.emit('error', new PluginError('gulp-clean-css', 'Streaming not supported!'));
-      return cb();
+      return cb(null, file);
     }
 
     var fileOptions = objectAssign({target: file.path}, options);

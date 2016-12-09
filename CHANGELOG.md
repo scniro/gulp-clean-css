@@ -1,3 +1,7 @@
+# 2.2.1 (12/09/2016)
+
+- bug fix #18 => https://github.com/scniro/gulp-clean-css/issues/18#issuecomment-266127536
+
 # 2.2.0 (12/08/2016)
 
 - remove vinyl-sourcemaps-apply in favor of clean-css sourcemap engine
