@@ -59,7 +59,7 @@ describe('gulp-clean-css: base functionality', function () {
       .pipe(gulpSass())
       .pipe(cleanCSS())
       .pipe(gulp.dest(function (file) {
-        return `${file.base}/empty-parsed`;
+        return file.base + '/empty-parsed';
       }))
       .on('data', function (file) {
         i += 1;
