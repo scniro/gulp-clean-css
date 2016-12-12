@@ -28,6 +28,9 @@ describe('gulp-clean-css: base functionality', function () {
     gulp.src(['test/fixtures/**/*.scss', '!test/fixtures/empty/**'])
       .pipe(gulpSass())
       .pipe(cleanCSS())
+      .pipe(rename({
+        suffix: '.generated',
+      }))
       .pipe(gulp.dest('test/fixtures/'))
       .on('data', function (file) {
         i += 1;
@@ -58,6 +61,9 @@ describe('gulp-clean-css: base functionality', function () {
     gulp.src('test/fixtures/empty/**/*.scss')
       .pipe(gulpSass())
       .pipe(cleanCSS())
+      .pipe(rename({
+        suffix: '.generated',
+      }))
       .pipe(gulp.dest(function (file) {
         return file.base + '/empty-parsed';
       }))
@@ -162,10 +168,13 @@ describe('gulp-clean-css: base functionality', function () {
 
     var i = 0;
 
-    gulp.src('test/fixtures/sourcemaps/**/*.css')
+    gulp.src(['test/fixtures/sourcemaps/**/*.css', '!test/fixtures/sourcemaps/**/*.generated.css'])
       .pipe(sourcemaps.init())
       .pipe(concat('sourcemapped.css'))
       .pipe(cleanCSS())
+      .pipe(rename({
+        suffix: '.generated',
+      }))
       .on('data', function (file) {
         i += 1;
       })

@@ -1,3 +1,7 @@
+# 2.2.2 (12/12/2016)
+
+- clean-css release update, 3.4.21 => 3.4.22
+
 # 2.2.1 (12/09/2016)
 
 - bug fix #18 => https://github.com/scniro/gulp-clean-css/issues/18#issuecomment-266127536
