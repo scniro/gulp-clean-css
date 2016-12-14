@@ -1,3 +1,8 @@
+# 2.3.0 (12/12/2016)
+
+- bug fix #21 => https://github.com/scniro/gulp-clean-css/issues/21
+- adding back vinyl-sourcemaps-apply
+
 # 2.2.2 (12/12/2016)
 
 - clean-css release update, 3.4.21 => 3.4.22

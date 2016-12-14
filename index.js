@@ -1,3 +1,4 @@
+const applySourceMap = require('vinyl-sourcemaps-apply');
 const CleanCSS = require('clean-css');
 const objectAssign = require('object-assign');
 const path = require('path');
@@ -52,6 +53,17 @@ module.exports = function gulpCleanCSS(options, callback) {
       }
 
       file.contents = new Buffer(css.styles);
+
+      if (css.sourceMap) {
+
+        var map = JSON.parse(css.sourceMap);
+        map.file = path.relative(file.base, file.path);
+        map.sources = map.sources.map(function (src) {
+          return path.relative(file.base, file.path)
+        });
+
+        applySourceMap(file, map);
+      }
 
       cb(null, file);
     });

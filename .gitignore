@@ -4,3 +4,4 @@ sandbox
 node_modules
 coverage
 test/**/*.generated.*
+test/**/*.min.css

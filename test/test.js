@@ -25,7 +25,7 @@ describe('gulp-clean-css: base functionality', function () {
   it('should play nicely with other plugins: gulp-sass: before', function (done) {
     var i = 0;
 
-    gulp.src(['test/fixtures/**/*.scss', '!test/fixtures/empty/**'])
+    gulp.src(['test/fixtures/**/*.scss', '!test/fixtures/empty/**', '!test/fixtures/sourcemaps-load/**'])
       .pipe(gulpSass())
       .pipe(cleanCSS())
       .pipe(rename({
@@ -184,6 +184,29 @@ describe('gulp-clean-css: base functionality', function () {
       }))
       .once('end', function () {
         i.should.equal(1);
+        done();
+      });
+  });
+
+  it('should write sourcemaps, worrectly map output', function (done) {
+
+    var i = 0;
+
+    gulp.src('test/fixtures/sourcemaps-load/scss/test-sass.scss')
+      .pipe(sourcemaps.init())
+      .pipe(gulpSass())
+      .pipe(sourcemaps.init({loadMaps: true}))
+      .pipe(cleanCSS({sourceMapInlineSources: true}))
+      .on('data', function (file) {
+        i += 1;
+      })
+      .pipe(rename({
+        suffix: '.min'
+      }))
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest('test/fixtures/sourcemaps-load/min'))
+      .once('end', function () {
+        i.should.equal(1); // todo inspect mapping here
         done();
       });
   });
