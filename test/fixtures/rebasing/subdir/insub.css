@@ -1,0 +1,21 @@
+
+p.insub_same
+{
+    background: url(insub.png);
+}
+p.insub_child
+{
+    background url(child/child.png);
+}
+p.insub_parent
+{
+    background: url(../parent.png);
+}
+p.insub_other
+{
+    background: url(../othersub/inother.png);
+}
+p.insub_absolute
+{
+    background: url(/inroot.png);
+}

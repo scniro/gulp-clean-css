@@ -1,0 +1,8 @@
+@import url(../otherdir/imported.css);
+@import url(/rebasing/subdir/insub.css);
+@import url(/rebasing/root.css);
+
+p.import
+{
+    background: url(import.png);
+}

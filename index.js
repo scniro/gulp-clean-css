@@ -24,8 +24,8 @@ module.exports = function gulpCleanCSS(options, callback) {
 
     var fileOptions = objectAssign({target: file.path}, options);
 
-    if (!fileOptions.relativeTo && (fileOptions.root || file.path))
-      fileOptions.relativeTo = path.dirname(path.resolve(options.root || file.path));
+    if (!fileOptions.relativeTo && file.path)
+      fileOptions.relativeTo = path.dirname(path.resolve(file.path));
 
     if (file.sourceMap)
       fileOptions.sourceMap = JSON.parse(JSON.stringify(file.sourceMap));
