@@ -10,7 +10,7 @@ gulp.task('pre-test', function () {
 });
 
 gulp.task('test', ['pre-test'], function () {
-  return gulp.src('test/test.js')
+  return gulp.src('test/*.js')
     .pipe(mocha({reporter: 'list'}))
     .pipe(istanbul.writeReports({
       includeUntested: true,

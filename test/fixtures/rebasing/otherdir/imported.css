@@ -1,0 +1,18 @@
+@import url(nestedsub/nested.css);
+
+p.imported_same
+{
+    background: url(imported.png);
+}
+p.imported_parent
+{
+    background: url(../parent.png);
+}
+p.imported_other
+{
+    background: url(../othersub/inother.png);
+}
+p.imported_absolute
+{
+    background: url(/inroot.png);
+}
