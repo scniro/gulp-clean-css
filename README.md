@@ -70,7 +70,6 @@ gulp.task('minify-css', function() {
         .pipe(cleanCSS())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist'));
-    });
 });
 ```
 
