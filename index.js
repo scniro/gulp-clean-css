@@ -22,17 +22,12 @@ module.exports = function gulpCleanCSS(options, callback) {
       return cb(null, file);
     }
 
-    var fileOptions = objectAssign({target: file.path}, options);
-
-    if (!fileOptions.relativeTo && file.path)
-      fileOptions.relativeTo = path.dirname(path.resolve(file.path));
-
     if (file.sourceMap)
-      fileOptions.sourceMap = JSON.parse(JSON.stringify(file.sourceMap));
+      options.sourceMap = JSON.parse(JSON.stringify(file.sourceMap));
 
     var style = file.contents ? file.contents.toString() : '';
 
-    new CleanCSS(fileOptions).minify(style, function (errors, css) {
+    new CleanCSS(options).minify(style, function (errors, css) {
 
       if (errors)
         return cb(errors.join(' '));

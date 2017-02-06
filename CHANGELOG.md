@@ -1,3 +1,8 @@
+# 2.4.0 (02/05/2017)
+
+- upgrade to clean-css 4.x
+- devdep updates
+
 # 2.3.1 (12/17/2016)
 
 - merge fix for #24 (https://github.com/scniro/gulp-clean-css/pull/24)
