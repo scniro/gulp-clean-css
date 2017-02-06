@@ -1,3 +1,7 @@
+# 3.0.0 (02/05/2017)
+
+- upgrade to clean-css 4.x (should have had major bump in 2.4.0)
+
 # 2.4.0 (02/05/2017)
 
 - upgrade to clean-css 4.x
