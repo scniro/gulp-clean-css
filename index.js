@@ -1,6 +1,5 @@
 const applySourceMap = require('vinyl-sourcemaps-apply');
 const CleanCSS = require('clean-css');
-const objectAssign = require('object-assign');
 const path = require('path');
 const PluginError = require('gulp-util').PluginError;
 const through = require('through2');
