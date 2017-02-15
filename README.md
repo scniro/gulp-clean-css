@@ -73,6 +73,24 @@ gulp.task('minify-css', function() {
 });
 ```
 
+## Loading via gulp plugins
+
+If you use `gulp-load-plugins`, you can load use it like this:
+
+```javascript
+import gulp from 'gulp';
+import gulpLoadPlugins from 'gulp-load-plugins';
+const $ = gulpLoadPlugins();
+
+gulp.task('minify-css', () => {
+    return gulp.src('./src/*.css')
+        .pipe($.sourcemaps.init())
+        .pipe($.cleanCss())
+        .pipe($.sourcemaps.write())
+        .pipe(gulp.dest('dist'));
+});
+```
+
 ## License
 
 [MIT](./LICENSE) © 2016 [scniro](https://github.com/scniro)
