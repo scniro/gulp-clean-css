@@ -24,9 +24,9 @@ module.exports = function gulpCleanCSS(options, callback) {
     if (file.sourceMap)
       options.sourceMap = JSON.parse(JSON.stringify(file.sourceMap));
 
-    var style = file.contents ? file.contents.toString() : '';
+    // var style = file.contents ? file.contents.toString() : '';
 
-    new CleanCSS(options).minify(style, function (errors, css) {
+    new CleanCSS(options).minify([file.path], function (errors, css) {
 
       if (errors)
         return cb(errors.join(' '));
