@@ -11,7 +11,7 @@ gulp.task('pre-test', function () {
 
 gulp.task('test', ['pre-test'], function () {
   return gulp.src('test/*.js')
-    .pipe(mocha({reporter: 'list'}))
+    .pipe(mocha({reporter: 'dot'}))
     .pipe(istanbul.writeReports({
       includeUntested: true,
       reporters: ['lcov']

@@ -11,7 +11,7 @@ module.exports = function gulpCleanCSS(options, callback) {
   if (arguments.length === 1 && Object.prototype.toString.call(arguments[0]) === '[object Function]')
     callback = arguments[0];
 
-  var transform = function (file, enc, cb) {
+  let transform = function (file, enc, cb) {
 
     if (!file || !file.contents)
       return cb(null, file);
@@ -24,7 +24,13 @@ module.exports = function gulpCleanCSS(options, callback) {
     if (file.sourceMap)
       options.sourceMap = JSON.parse(JSON.stringify(file.sourceMap));
 
-    var style = file.contents ? file.contents.toString() : '';
+    if (options.rebaseTo) {
+
+      let relative = path.resolve(file.path, options.rebaseTo);
+      options.rebaseTo = path.relative(relative, file.path)
+    }
+
+    let style = file.contents ? file.contents.toString() : '';
 
     new CleanCSS(options).minify(style, function (errors, css) {
 
@@ -32,13 +38,13 @@ module.exports = function gulpCleanCSS(options, callback) {
         return cb(errors.join(' '));
 
       if (typeof callback === 'function') {
-        var details = {
+        let details = {
           'stats': css.stats,
           'errors': css.errors,
           'warnings': css.warnings,
           'path': file.path,
           'name': file.path.split(file.base)[1]
-        }
+        };
 
         if (css.sourceMap)
           details['sourceMap'] = css.sourceMap;
@@ -50,7 +56,7 @@ module.exports = function gulpCleanCSS(options, callback) {
 
       if (css.sourceMap) {
 
-        var map = JSON.parse(css.sourceMap);
+        let map = JSON.parse(css.sourceMap);
         map.file = path.relative(file.base, file.path);
         map.sources = map.sources.map(function (src) {
           return path.relative(file.base, file.path)
