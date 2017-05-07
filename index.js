@@ -1,3 +1,5 @@
+'use strict';
+
 const applySourceMap = require('vinyl-sourcemaps-apply');
 const CleanCSS = require('clean-css');
 const path = require('path');
