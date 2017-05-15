@@ -226,7 +226,7 @@ describe('gulp-clean-css: base functionality', function () {
     .pipe(cleanCSS({debug: true}, function (details) {
       expect(details.warnings).to.exist &&
       expect(details.warnings.length).to.equal(1) &&
-      expect(details.warnings[0]).to.equal('Missing \'}\' at 1:14.');
+      expect(details.warnings[0]).to.equal('Missing \'}\' at fixtures/test.css:1:14.');
     }))
     .on('data', function (file) {
       i += 1;
@@ -273,10 +273,10 @@ describe('gulp-clean-css: rebase', function () {
     .on('data', function (file) {
 
       let expected = `
-        p.insub_same{background:url(insub.png)}
-        p.insub_child{background:url(child/child.png)}
-        p.insub_parent{background:url(../parent.png)}
-        p.insub_other{background:url(../othersub/inother.png)}
+        p.insub_same{background:url(test/fixtures/rebasing/subdir/insub.png)}
+        p.insub_child{background:url(test/fixtures/rebasing/subdir/child/child.png)}
+        p.insub_parent{background:url(test/fixtures/rebasing/parent.png)}
+        p.insub_other{background:url(test/fixtures/rebasing/othersub/inother.png)}
         p.insub_absolute{background:url(/inroot.png)}`;
 
       let actual = file.contents.toString();
@@ -288,15 +288,15 @@ describe('gulp-clean-css: rebase', function () {
 
   it('should by rebase files with target specified', function (done) {
     gulp.src(['test/fixtures/rebasing/subdir/insub.css'])
-    .pipe(cleanCSS({rebaseTo: '..'}))
+    .pipe(cleanCSS({rebaseTo: 'test'}))
     .on('data', function (file) {
 
       let expected = `
-          p.insub_same{background:url(../insub.png)}
-          p.insub_child{background:url(../child/child.png)}
-          p.insub_parent{background:url(../../parent.png)}
-          p.insub_other{background:url(../../othersub/inother.png)}
-          p.insub_absolute{background:url(/inroot.png)}`;
+        p.insub_same{background:url(fixtures/rebasing/subdir/insub.png)}
+        p.insub_child{background:url(fixtures/rebasing/subdir/child/child.png)}
+        p.insub_parent{background:url(fixtures/rebasing/parent.png)}
+        p.insub_other{background:url(fixtures/rebasing/othersub/inother.png)}
+        p.insub_absolute{background:url(/inroot.png)}`;
 
       let actual = file.contents.toString();
 
