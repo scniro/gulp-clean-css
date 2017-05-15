@@ -53,6 +53,6 @@
     "vinyl-fs-fake": "1.1.0"
   },
   "scripts": {
-    "test": "gulp test"
+    "test": "./node_modules/.bin/gulp test"
   }
 }
