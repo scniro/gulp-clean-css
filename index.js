@@ -26,6 +26,9 @@ module.exports = function gulpCleanCSS(options, callback) {
     if (file.sourceMap)
       options.sourceMap = JSON.parse(JSON.stringify(file.sourceMap));
 
+    if(!options.rebaseTo)
+      options.rebase = false;
+
     let style = {
       [file.path]: {
         styles: file.contents ? file.contents.toString() : ''

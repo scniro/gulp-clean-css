@@ -265,18 +265,17 @@ describe('gulp-clean-css: base functionality', function () {
 });
 
 describe('gulp-clean-css: rebase', function () {
-
-  it('should not rebase files by default', function (done) {
+  it('should not rebase files by default - do not resolve relative files', function (done) {
 
     gulp.src(['test/fixtures/rebasing/subdir/insub.css'])
     .pipe(cleanCSS())
     .on('data', function (file) {
 
       let expected = `
-        p.insub_same{background:url(test/fixtures/rebasing/subdir/insub.png)}
-        p.insub_child{background:url(test/fixtures/rebasing/subdir/child/child.png)}
-        p.insub_parent{background:url(test/fixtures/rebasing/parent.png)}
-        p.insub_other{background:url(test/fixtures/rebasing/othersub/inother.png)}
+        p.insub_same{background:url(insub.png)}
+        p.insub_child{background:url(child/child.png)}
+        p.insub_parent{background:url(../parent.png)}
+        p.insub_other{background:url(../othersub/inother.png)}
         p.insub_absolute{background:url(/inroot.png)}`;
 
       let actual = file.contents.toString();
