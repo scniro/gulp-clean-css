@@ -8,7 +8,7 @@ const through = require('through2');
 
 module.exports = function gulpCleanCSS(options, callback) {
 
-  options = options || {};
+  options = Object.assign(options || {});
 
   if (arguments.length === 1 && Object.prototype.toString.call(arguments[0]) === '[object Function]')
     callback = arguments[0];
@@ -26,12 +26,10 @@ module.exports = function gulpCleanCSS(options, callback) {
     if (file.sourceMap)
       options.sourceMap = JSON.parse(JSON.stringify(file.sourceMap));
 
-    if(!options.rebaseTo)
-      options.rebase = false;
-
+    let contents = file.contents ? file.contents.toString() : '';
     let style = {
       [file.path]: {
-        styles: file.contents ? file.contents.toString() : ''
+        styles: contents
       }
     };
 
