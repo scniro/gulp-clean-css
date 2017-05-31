@@ -309,7 +309,7 @@ describe('gulp-clean-css: rebase', function () {
   it('should rebase to current relative file location - relative imports are resolved like in the browser', function (done) {
 
     gulp.src(['test/fixtures/rebasing/subdir/import.css'])
-    .pipe(cleanCSS({}))
+    .pipe(cleanCSS())
     .on('data', function (file) {
 
       let expected = `
