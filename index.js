@@ -28,8 +28,8 @@ module.exports = function gulpCleanCSS(options, callback) {
 
     let contents = file.contents ? file.contents.toString() : '';
     let pass = {[file.path]: {styles: contents}};
-    if (!options.rebaseTo && options.rebase!==false){
-        options.rebaseTo = path.dirname(file.path);
+    if (!options.rebaseTo && options.rebase !== false) {
+      options.rebaseTo = path.dirname(file.path);
     }
 
     new CleanCSS(options).minify(pass, function (errors, css) {
