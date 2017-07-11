@@ -7,6 +7,7 @@
 [![Climate](https://img.shields.io/codeclimate/github/scniro/gulp-clean-css.svg?label=climate&style=flat-square)](https://codeclimate.com/github/scniro/gulp-clean-css)
 [![Downloads](https://img.shields.io/npm/dm/gulp-clean-css.svg?style=flat-square)](https://travis-ci.org/scniro/gulp-clean-css)
 [![NPM Version](https://img.shields.io/npm/v/gulp-clean-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-clean-css)
+[![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/alferov/awesome-gulp#minification)
 
 > [gulp](http://gulpjs.com/) plugin to minify CSS, using [clean-css](https://github.com/jakubpawlowicz/clean-css)
 
