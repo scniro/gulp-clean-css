@@ -50,9 +50,9 @@ let cleanCSS = require('gulp-clean-css');
 
 gulp.task('minify-css', () => {
   return gulp.src('styles/*.css')
-    .pipe(cleanCSS({debug: true}, function(details) {
-      console.log(details.name + ': ' + details.stats.originalSize);
-      console.log(details.name + ': ' + details.stats.minifiedSize);
+    .pipe(cleanCSS({debug: true}, (details) => {
+      console.log(`${details.name}: ${details.stats.originalSize}`);
+      console.log(`${details.name}: ${details.stats.minifiedSize}`);
     }))
   .pipe(gulp.dest('dist'));
 });
