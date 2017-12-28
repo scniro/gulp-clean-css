@@ -3,7 +3,7 @@
 const applySourceMap = require('vinyl-sourcemaps-apply');
 const CleanCSS = require('clean-css');
 const path = require('path');
-const PluginError = require('gulp-util').PluginError;
+const PluginError = require('plugin-error');
 const through = require('through2');
 
 module.exports = function gulpCleanCSS(options, callback) {
