@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var mocha = require('gulp-mocha');
-var gutil = require('gulp-util');
+var log = require('fancy-log');
 var istanbul = require('gulp-istanbul');
 
 gulp.task('pre-test', function () {
@@ -16,5 +16,5 @@ gulp.task('test', ['pre-test'], function () {
     includeUntested: true,
     reporters: ['lcov']
   }))
-  .on('error', gutil.log);
+  .on('error', log);
 });
