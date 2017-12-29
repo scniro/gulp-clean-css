@@ -4,7 +4,6 @@
 [![Dependency Status](https://img.shields.io/david/scniro/gulp-clean-css.svg?label=deps&style=flat-square)](https://david-dm.org/scniro/gulp-clean-css)
 [![devDependency Status](https://img.shields.io/david/dev/scniro/gulp-clean-css.svg?label=devDeps&style=flat-square)](https://david-dm.org/scniro/gulp-clean-css#info=devDependencies)
 [![Coverage](https://img.shields.io/coveralls/scniro/gulp-clean-css.svg?style=flat-square)](https://coveralls.io/github/scniro/gulp-clean-css)
-[![Climate](https://img.shields.io/codeclimate/github/scniro/gulp-clean-css.svg?label=climate&style=flat-square)](https://codeclimate.com/github/scniro/gulp-clean-css)
 [![Downloads](https://img.shields.io/npm/dm/gulp-clean-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-clean-css)
 [![NPM Version](https://img.shields.io/npm/v/gulp-clean-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-clean-css)
 [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/alferov/awesome-gulp#minification)
