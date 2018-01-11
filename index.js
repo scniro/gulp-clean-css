@@ -59,7 +59,7 @@ module.exports = function gulpCleanCSS(options, callback) {
         let map = JSON.parse(css.sourceMap);
         map.file = path.relative(file.base, file.path);
         map.sources = map.sources.map(function (src) {
-          return path.relative(file.base, file.path)
+          return path.relative(file.base, src)
         });
 
         applySourceMap(file, map);

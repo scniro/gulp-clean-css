@@ -190,6 +190,26 @@ describe('gulp-clean-css: base functionality', () => {
     });
   });
 
+  it('should write sourcemaps, correct source path', done => {
+	let maps = {};
+    gulp.src(['test/fixtures/sourcemaps-import/styles/main.css'],{base:'test/fixtures/sourcemaps-import/styles'})
+    .pipe(sourcemaps.init())
+    .pipe(cleanCSS())
+	.pipe(sourcemaps.mapSources(function(sourcePath, file) {
+		maps[sourcePath] = true;
+        return sourcePath;
+    }))
+    .pipe(sourcemaps.write('./', {sourceRoot: '/'}))
+    .pipe(gulp.dest('test/fixtures/sourcemaps-import'))
+    .once('end', () => {
+      true.should.equal(maps['main.css']);
+      true.should.equal(maps['partial.css']);
+      done();
+    });
+  
+  
+  });
+  
   it('should write sourcemaps, worrectly map output', done => {
 
     let i = 0;
