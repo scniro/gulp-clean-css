@@ -1,73 +1,61 @@
-'use strict';
-
 const applySourceMap = require('vinyl-sourcemaps-apply');
 const CleanCSS = require('clean-css');
 const path = require('path');
 const PluginError = require('plugin-error');
 const through = require('through2');
 
-module.exports = function gulpCleanCSS(options, callback) {
+module.exports = (options, callback) => {
 
-  options = Object.assign(options || {});
+  let _options = Object.assign({}, options || {});
+  let _callback = callback || (o => undefined);
 
-  if (arguments.length === 1 && Object.prototype.toString.call(arguments[0]) === '[object Function]')
-    callback = arguments[0];
-
-  let transform = function (file, enc, cb) {
-
-    if (!file || !file.contents)
-      return cb(null, file);
+  return through.obj(function (file, enc, cb) {
 
     if (file.isStream()) {
       this.emit('error', new PluginError('gulp-clean-css', 'Streaming not supported!'));
       return cb(null, file);
     }
 
-    if (file.sourceMap)
-      options.sourceMap = JSON.parse(JSON.stringify(file.sourceMap));
-
-    let contents = file.contents ? file.contents.toString() : '';
-    let pass = {[file.path]: {styles: contents}};
-    if (!options.rebaseTo && options.rebase !== false) {
-      options.rebaseTo = path.dirname(file.path);
+    if (file.sourceMap) {
+      _options.sourceMap = JSON.parse(JSON.stringify(file.sourceMap));
     }
 
-    new CleanCSS(options).minify(pass, function (errors, css) {
+    const content = {
+      [file.path]: {styles: file.contents.toString()}
+    };
+    if (!_options.rebaseTo && _options.rebase !== false) {
+      _options.rebaseTo = path.dirname(file.path);
+    }
 
-      if (errors)
+    new CleanCSS(_options).minify(content, (errors, css) => {
+      if (errors) {
         return cb(errors.join(' '));
-
-      if (typeof callback === 'function') {
-        let details = {
-          'stats': css.stats,
-          'errors': css.errors,
-          'warnings': css.warnings,
-          'path': file.path,
-          'name': file.path.split(file.base)[1]
-        };
-
-        if (css.sourceMap)
-          details['sourceMap'] = css.sourceMap;
-
-        callback(details);
       }
 
-      file.contents = new Buffer(css.styles);
+      let details = {
+        'stats': css.stats,
+        'errors': css.errors,
+        'warnings': css.warnings,
+        'path': file.path,
+        'name': file.path.split(file.base)[1]
+      };
 
       if (css.sourceMap) {
-
-        let map = JSON.parse(css.sourceMap);
-        map.file = path.relative(file.base, file.path);
-        map.sources = map.sources.map(function (src) {
-          return path.relative(file.base, file.path)
-        });
-
-        applySourceMap(file, map);
+        details['sourceMap'] = css.sourceMap;
       }
+      _callback(details);
 
+      file.contents = new Buffer.from(css.styles);
+
+      if (css.sourceMap) {
+        const iMap = JSON.parse(css.sourceMap);
+        const oMap = Object.assign({}, iMap, {
+          file: path.relative(file.base, file.path),
+          sources: iMap.sources.map(() => path.relative(file.base, file.path))
+        });
+        applySourceMap(file, oMap);
+      }
       cb(null, file);
     });
-  };
-
-  return through.obj(transform);
+  });
 };
