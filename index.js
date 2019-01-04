@@ -21,7 +21,7 @@ module.exports = (options, callback) => {
     }
 
     const content = {
-      [file.path]: {styles: file.contents.toString()}
+      [file.path]: {styles: file.contents ? file.contents.toString() : ''}
     };
     if (!_options.rebaseTo && _options.rebase !== false) {
       _options.rebaseTo = path.dirname(file.path);
