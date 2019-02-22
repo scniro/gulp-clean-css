@@ -6,10 +6,11 @@ const through = require('through2');
 
 module.exports = (options, callback) => {
 
-  let _options = Object.assign({}, options || {});
   let _callback = callback || (o => undefined);
 
   return through.obj(function (file, enc, cb) {
+
+    let _options = Object.assign({}, options || {});
 
     if (file.isStream()) {
       this.emit('error', new PluginError('gulp-clean-css', 'Streaming not supported!'));
