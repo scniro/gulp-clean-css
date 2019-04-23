@@ -55,7 +55,7 @@ module.exports = (options, callback) => {
         const iMap = JSON.parse(css.sourceMap);
         const oMap = Object.assign({}, iMap, {
           file: path.relative(file.base, file.path),
-          sources: iMap.sources.map(() => path.relative(file.base, file.path))
+          sources: iMap.sources.map(mapSrc => path.relative(file.base, mapSrc))
         });
         applySourceMap(file, oMap);
       }
