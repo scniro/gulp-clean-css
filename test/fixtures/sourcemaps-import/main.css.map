@@ -1,0 +1,1 @@
+{"version":3,"sources":["partial.css","main.css"],"names":[],"mappings":"AAAA,IACE,MAAM,ICCR,IACE,OAAO","file":"main.css","sourceRoot":"/","sourcesContent":["div {\n  color:red;\n}\n","@import(partial.css);\n\ndiv {\n  margin:10;\n}\n"]}

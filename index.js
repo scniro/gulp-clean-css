@@ -12,6 +12,9 @@ module.exports = (options, callback) => {
 
     let _options = Object.assign({}, options || {});
 
+    if (file.isNull()) {
+      return cb(null, file);
+    }
     if (file.isStream()) {
       this.emit('error', new PluginError('gulp-clean-css', 'Streaming not supported!'));
       return cb(null, file);
@@ -29,6 +32,7 @@ module.exports = (options, callback) => {
     }
 
     new CleanCSS(_options).minify(content, (errors, css) => {
+
       if (errors) {
         return cb(errors.join(' '));
       }
@@ -52,7 +56,7 @@ module.exports = (options, callback) => {
         const iMap = JSON.parse(css.sourceMap);
         const oMap = Object.assign({}, iMap, {
           file: path.relative(file.base, file.path),
-          sources: iMap.sources.map(() => path.relative(file.base, file.path))
+          sources: iMap.sources.map(mapSrc => path.relative(file.base, mapSrc))
         });
         applySourceMap(file, oMap);
       }
