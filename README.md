@@ -76,4 +76,4 @@ gulp.task('minify-css',() => {
 
 ## License
 
-[MIT](./LICENSE) © 2018 [scniro](https://github.com/scniro)
+[MIT](./LICENSE) © 2019 [scniro](https://github.com/scniro)
