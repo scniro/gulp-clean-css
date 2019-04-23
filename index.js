@@ -10,10 +10,10 @@ module.exports = (options, callback) => {
   let _callback = callback || (o => undefined);
 
   return through.obj(function (file, enc, cb) {
+
     if (file.isNull()) {
       return cb(null, file);
     }
-
     if (file.isStream()) {
       this.emit('error', new PluginError('gulp-clean-css', 'Streaming not supported!'));
       return cb(null, file);
@@ -31,6 +31,7 @@ module.exports = (options, callback) => {
     }
 
     new CleanCSS(_options).minify(content, (errors, css) => {
+
       if (errors) {
         return cb(errors.join(' '));
       }

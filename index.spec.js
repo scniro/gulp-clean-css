@@ -138,8 +138,12 @@ describe('gulp-clean-css: base functionality', () => {
   });
 
   it('should invoke optional callback with out options object supplied: return object hash', done => {
+
+    let called = false;
+
     gulp.src('test/fixtures/test.css')
-      .pipe(cleanCSS(details => {
+      .pipe(cleanCSS({}, details => {
+        called = true;
         details.stats.should.exist &&
         expect(details).to.have.ownProperty('stats') &&
         expect(details).to.have.ownProperty('errors') &&
@@ -147,8 +151,12 @@ describe('gulp-clean-css: base functionality', () => {
         expect(details).to.not.have.ownProperty('sourceMap');
       }))
       .on('data', (file) => {
+        //
+      })
+      .once('end', () => {
+        expect(called).to.be.true;
         done();
-      });
+      })
   });
 
   it('should invoke optional callback without options object supplied: return object hash with sourceMap: true; return correct hash', done => {
@@ -240,6 +248,20 @@ describe('gulp-clean-css: base functionality', () => {
         done();
       })
   });
+
+  it('should not process empty directories or files', done => {
+
+    gulp.src('./test/fixtures/very-empty/**')
+      .pipe(cleanCSS({}, detail => {
+        expect(detail.errors).to.be.empty;
+      }))
+      .on('data', file => {
+        //
+      })
+      .on('end', () => {
+        done();
+      });
+  })
 });
 
 describe('gulp-clean-css: rebase', () => {
