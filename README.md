@@ -29,8 +29,8 @@ npm install gulp-clean-css --save-dev
 See the [`CleanCSS` options](https://github.com/jakubpawlowicz/clean-css#how-to-use-clean-css-api).
 
 ```javascript
-let gulp = require('gulp');
-let cleanCSS = require('gulp-clean-css');
+const gulp = require('gulp');
+const cleanCSS = require('gulp-clean-css');
 
 gulp.task('minify-css', () => {
   return gulp.src('styles/*.css')
@@ -44,8 +44,8 @@ gulp.task('minify-css', () => {
 Useful for returning details from the underlying [`minify()`](https://github.com/jakubpawlowicz/clean-css#using-api) call. An example use case could include logging `stats` of the minified file. In addition to the default object, `gulp-clean-css` provides the file `name` and `path` for further analysis.
 
 ```javascript
-let gulp = require('gulp');
-let cleanCSS = require('gulp-clean-css');
+const gulp = require('gulp');
+const cleanCSS = require('gulp-clean-css');
 
 gulp.task('minify-css', () => {
   return gulp.src('styles/*.css')
@@ -61,9 +61,9 @@ gulp.task('minify-css', () => {
 
 ```javascript
 
-let gulp = require('gulp');
-let cleanCSS = require('gulp-clean-css');
-let sourcemaps = require('gulp-sourcemaps');
+const gulp = require('gulp');
+const cleanCSS = require('gulp-clean-css');
+const sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('minify-css',() => {
   return gulp.src('./src/*.css')
@@ -76,4 +76,4 @@ gulp.task('minify-css',() => {
 
 ## License
 
-[MIT](./LICENSE) © 2019 [scniro](https://github.com/scniro)
+[MIT](./LICENSE) © 2020 [scniro](https://github.com/scniro)
