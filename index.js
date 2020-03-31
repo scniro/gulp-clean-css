@@ -34,7 +34,7 @@ module.exports = (options, callback) => {
     new CleanCSS(_options).minify(content, (errors, css) => {
 
       if (errors) {
-        return cb(errors.join(' '));
+        return cb(new Error(errors.join(' ')));
       }
 
       let details = {
