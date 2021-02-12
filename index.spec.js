@@ -287,7 +287,7 @@ describe('gulp-clean-css: rebase', () => {
   it('should not rebase files by default - do not resolve relative files', done => {
 
     gulp.src(['test/fixtures/rebasing/subdir/insub.css'])
-      .pipe(cleanCSS({rebase: false}))
+      .pipe(cleanCSS())
       .on('data', file => {
 
         let expected = `
@@ -307,7 +307,7 @@ describe('gulp-clean-css: rebase', () => {
   it('should by rebase files with target specified', done => {
 
     gulp.src(['test/fixtures/rebasing/subdir/insub.css'])
-      .pipe(cleanCSS({rebaseTo: 'test'}))
+      .pipe(cleanCSS({rebase: true, rebaseTo: 'test'}))
       .on('data', file => {
 
         let expected = `
@@ -327,7 +327,7 @@ describe('gulp-clean-css: rebase', () => {
   it('should rebase to current relative file location - relative imports are resolved like in the browser', done => {
 
     gulp.src(['test/fixtures/rebasing/subdir/import.css'])
-      .pipe(cleanCSS())
+      .pipe(cleanCSS({rebase: true}))
       .on('data', file => {
 
         let expected = `
