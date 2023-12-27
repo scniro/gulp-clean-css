@@ -3,7 +3,7 @@ const cleanCSS = require('.');
 const concat = require('gulp-concat');
 const File = require('vinyl');
 const gulp = require('gulp');
-const gulpSass = require('gulp-sass');
+const gulpSass = require('gulp-sass')(require('sass'));
 const rename = require('gulp-rename');
 const sourcemaps = require('gulp-sourcemaps');
 

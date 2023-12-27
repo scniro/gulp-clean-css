@@ -2,13 +2,12 @@
 
 [![Build Status](https://img.shields.io/travis/scniro/gulp-clean-css.svg?style=flat-square)](https://travis-ci.org/scniro/gulp-clean-css)
 [![Dependency Status](https://img.shields.io/david/scniro/gulp-clean-css.svg?label=deps&style=flat-square)](https://david-dm.org/scniro/gulp-clean-css)
-[![devDependency Status](https://img.shields.io/david/dev/scniro/gulp-clean-css.svg?label=devDeps&style=flat-square)](https://david-dm.org/scniro/gulp-clean-css#info=devDependencies)
-[![Coverage](https://img.shields.io/coveralls/scniro/gulp-clean-css.svg?style=flat-square)](https://coveralls.io/github/scniro/gulp-clean-css)
-[![Downloads](https://img.shields.io/npm/dm/gulp-clean-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-clean-css)
-[![NPM Version](https://img.shields.io/npm/v/gulp-clean-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-clean-css)
-[![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/alferov/awesome-gulp#minification)
+[![Coverage Status](https://coveralls.io/repos/github/andre487/gulp-cleaner-css/badge.svg)](https://coveralls.io/github/andre487/gulp-cleaner-css)
+[![Downloads](https://img.shields.io/npm/dm/gulp-cleaner-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-cleaner-css)
+[![NPM Version](https://img.shields.io/npm/v/gulp-cleaner-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-cleaner-css)
 
 > [gulp](http://gulpjs.com/) plugin to minify CSS, using [clean-css](https://github.com/jakubpawlowicz/clean-css)
+> This is a fork of [gulp-clean-css](https://github.com/scniro/gulp-clean-css) with updated dependencies.
 
 ## Regarding Issues
 
@@ -17,7 +16,7 @@ This is just a simple [gulp](https://github.com/gulpjs/gulp) plugin, which means
 ## Install
 
 ```
-npm install gulp-clean-css --save-dev
+npm install gulp-cleaner-css --save-dev
 ```
 
 ## API
@@ -30,7 +29,7 @@ See the [`CleanCSS` options](https://github.com/jakubpawlowicz/clean-css#how-to-
 
 ```javascript
 const gulp = require('gulp');
-const cleanCSS = require('gulp-clean-css');
+const cleanCSS = require('gulp-cleaner-css');
 
 gulp.task('minify-css', () => {
   return gulp.src('styles/*.css')
@@ -45,7 +44,7 @@ Useful for returning details from the underlying [`minify()`](https://github.com
 
 ```javascript
 const gulp = require('gulp');
-const cleanCSS = require('gulp-clean-css');
+const cleanCSS = require('gulp-cleaner-css');
 
 gulp.task('minify-css', () => {
   return gulp.src('styles/*.css')
@@ -62,7 +61,7 @@ gulp.task('minify-css', () => {
 ```javascript
 
 const gulp = require('gulp');
-const cleanCSS = require('gulp-clean-css');
+const cleanCSS = require('gulp-cleaner-css');
 const sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('minify-css',() => {
@@ -76,4 +75,6 @@ gulp.task('minify-css',() => {
 
 ## License
 
-[MIT](./LICENSE) © 2020 [scniro](https://github.com/scniro)
+[MIT](./LICENSE)
+© 2020 [scniro](https://github.com/scniro)
+© 2023 [andre487](https://github.com/andre487)
