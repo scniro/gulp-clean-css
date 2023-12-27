@@ -1,17 +1,16 @@
 {
-  "name": "gulp-clean-css",
+  "name": "gulp-cleaner-css",
   "description": "Minify css with clean-css.",
-  "homepage": "https://github.com/scniro/gulp-clean-css#readme",
+  "homepage": "https://github.com/andre487/gulp-cleaner-css#readme",
   "version": "4.2.0",
   "author": "scniro",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/scniro/gulp-clean-css/issues",
-    "email": "scniro@outlook.com"
+    "url": "https://github.com/andre487/gulp-cleaner-css/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/scniro/gulp-clean-css.git"
+    "url": "https://github.com/andre487/gulp-cleaner-css.git"
   },
   "files": [
     "index.js"
@@ -55,10 +54,11 @@
     "gulp": "4.0.2",
     "gulp-concat": "2.6.1",
     "gulp-rename": "2.0.0",
-    "gulp-sass": "4.0.2",
+    "gulp-sass": "5.1.0",
     "gulp-sourcemaps": "2.6.5",
     "mocha": "7.0.0",
     "nyc": "15.0.0",
+    "sass": "1.69.5",
     "vinyl": "2.2.0"
   },
   "scripts": {
