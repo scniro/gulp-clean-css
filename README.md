@@ -1,7 +1,6 @@
 # gulp-clean-css
 
-[![Build Status](https://img.shields.io/travis/scniro/gulp-clean-css.svg?style=flat-square)](https://travis-ci.org/scniro/gulp-clean-css)
-[![Dependency Status](https://img.shields.io/david/scniro/gulp-clean-css.svg?label=deps&style=flat-square)](https://david-dm.org/scniro/gulp-clean-css)
+[![Run tests](https://github.com/andre487/gulp-cleaner-css/actions/workflows/run-tests.yml/badge.svg)](https://github.com/andre487/gulp-cleaner-css/actions/workflows/run-tests.yml)
 [![Coverage Status](https://coveralls.io/repos/github/andre487/gulp-cleaner-css/badge.svg)](https://coveralls.io/github/andre487/gulp-cleaner-css)
 [![Downloads](https://img.shields.io/npm/dm/gulp-cleaner-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-cleaner-css)
 [![NPM Version](https://img.shields.io/npm/v/gulp-cleaner-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-cleaner-css)
